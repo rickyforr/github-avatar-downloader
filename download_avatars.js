@@ -7,9 +7,17 @@ var GITHUB_TOKEN = "5e55d4be18de888bdebbfee138b5ac39a63f2c87";
 
 function getRepoContributors(repoOwner, repoName, cb) {
   // ...
+
+  request.get('https://api.github.com/repos/jquery/jquery/contributors')
+
    var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
 
    console.log(requestURL);
+
+ request.get('https://api.github.com/repos/jquery/jquery/contributors')
+  .on('response', function (response) {
+         console.log('Response Status Code: ', response);
+       })
 
 }
 
