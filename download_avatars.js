@@ -1,16 +1,22 @@
 var request = require('request');
 var fs = require('fs')
 
+
+var contributor = process.argv[2]
+console.log(contributor);
+
+var repo = process.argv[3]
+console.log(repo)
+
+
 var options = {
-  url: 'https://api.github.com/repos/jquery/jquery/contributors',
+  url: 'https://api.github.com/repos/' + contributor + '/' + repo + '/contributors',
   headers: {
     'User-Agent': 'request'
   }
 };
 
 function callback(error, response, body) {
-  var results = []
-
 
   if (!error && response.statusCode == 200) {
     var info = JSON.parse(body);
@@ -19,29 +25,20 @@ function callback(error, response, body) {
 
   for (var i = 0; i < info.length; i++) {
 
-    logins = info[i].login
+    var logins = info[i].login;
 
     var avatars = request.get(info[i].avatar_url)
     .on('error', function (err) {
          throw err;
-       })
-       .on('response', function (response) {
-        console.log('Response Status Code: ', response.statusCode);
-       })
-       .pipe(fs.createWriteStream('./' + logins + '.jpeg'));
+    })
+    .on('response', function (response) {
+      console.log('Response Status Code: ', response.statusCode);
+    })
+    .pipe(fs.createWriteStream('avatars/' + logins + '.jpeg'));
   }
   }
-
-
-
 
 }
-
-
-
-
-
-
 
 
 request(options, callback);
