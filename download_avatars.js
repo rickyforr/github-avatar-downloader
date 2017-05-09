@@ -3,10 +3,10 @@ var fs = require('fs')
 
 
 var contributor = process.argv[2]
-console.log(contributor);
+
 
 var repo = process.argv[3]
-console.log(repo)
+
 
 
 var options = {
@@ -36,6 +36,10 @@ function callback(error, response, body) {
     })
     .pipe(fs.createWriteStream('avatars/' + logins + '.jpeg'));
   }
+
+  }
+  else {
+   console.log("Please provide a contributor and a repo")
   }
 
 }
